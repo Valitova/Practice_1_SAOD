@@ -33,20 +33,53 @@ void selection(int *ar)
            }
   }
 
+void radix(int *ar, int *br, int *cr)
+{
+    int i,k,n;
+    k = size;
+    n = size;
+    for (i = 0; i <= k; i++)
+        cr[i]=0;
+    for (i = 0; i < n; i++)
+        cr[ar[i]]+=1;
+    for (i = 1; i < k+1; i++)
+        cr[i]+=cr[i-1];
+    for (i = n-1; i >= 0; i--)
+      {
+         br[cr[ar[i]]-1]=ar[i];
+         cr[ar[i]]-=1;
+      }
+}
+
 int main()
 {
-    clock_t start, end;
+    clock_t start1, start2, end1, end2;
     int i;
-    int second;
-    int *arr = new int[size];
+    int second1, second2;
+    int *arr1 = new int[size];
+    int *arr2 = new int[size];
+    int *cr = new int[size];
+    int *br = new int[size];
     for (i = 0; i < size; i++)
-        arr[i] = rand()%20;
-    //arrOut(arr);
-    start = clock();
-    selection(arr);
-    end = clock();
-    //arrOut(arr);
-    second = end - start;
-    printf ("%s\n%d", "The time of sort <Selection>:", second);
+    {
+        arr1[i] = rand()%20;
+        arr2[i] = rand()%20;
+    }
+    //arrOut(arr1);
+    start1 = clock();
+    selection(arr1);
+    end1 = clock();
+    //arrOut(arr1);
+    second1 = end1 - start1;
+    printf ("%s\n%d\n", "The time of sort <Selection>:", second1);
+
+    //arrOut(arr2);
+    start2 = clock();
+    radix(arr2, br, cr);
+    end2 = clock();
+    //arrOut(br);
+    second2 = end2 - start2;
+    printf ("%s\n%d\n", "The time of sort <Radix>:", second2);
+
     getch();
 }

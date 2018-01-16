@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
-#define size 10
+#include <time.h>
+#define size 10000
 
 void arrOut (int *ar)
 {
@@ -34,12 +35,18 @@ void selection(int *ar)
 
 int main()
 {
+    clock_t start, end;
     int i;
+    int second;
     int *arr = new int[size];
     for (i = 0; i < size; i++)
         arr[i] = rand()%20;
-    arrOut(arr);
+    //arrOut(arr);
+    start = clock();
     selection(arr);
-    arrOut(arr);
+    end = clock();
+    //arrOut(arr);
+    second = end - start;
+    printf ("%s\n%d", "The time of sort <Selection>:", second);
     getch();
 }
